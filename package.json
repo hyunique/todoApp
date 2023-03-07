@@ -1,0 +1,24 @@
+{
+  "name": "todoapp",
+  "version": "1.0.0",
+  "description": "",
+  "private":true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+    },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hyunique/todoApp.git"
+  },
+  "author": "Elena Yi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hyunique/todoApp/issues"
+  },
+  "homepage": "https://github.com/Hyunique/todoApp#readme",
+  "devDependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
