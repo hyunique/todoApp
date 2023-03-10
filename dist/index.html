@@ -5,11 +5,54 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
         <title>Todo List</title>
     </head>
 
     <body>
-        <script src="main.js"></script>
+        <header>
+            <h1>Todo LIST</h1>
+        </header>
+
+        <main>
+            <div class="project">
+                <label for="pjt_title">Project Name</label>
+                <input type="text" name="pjt_title" class="project--title" id="">
+                <button class="addProject">Add New Project</button>
+
+
+            </div>
+            <div class="modal--container">
+                <form action="#" class="form">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" class="title" id="">
+                    <label for="description">Description</label>
+                    <input type="text" name="description" class="description" id="">
+                    <label for="duedate">Due</label>
+                    <input type="date" name="duedate" class="duedate" id="">
+                    <label for="priority">Priority</label>
+                    <select name="priority" class="priority" id="">
+                        <option value="🌟🌟🌟">🌟🌟🌟</option>
+                        <option value="🌟🌟">🌟🌟</option>
+                        <option value="🌟">🌟</option>
+                    </select>
+                    <button class="addTask">Add to list</button>
+                </form>
+            </div>
+
+            <div class="task--card">
+                <!-- <h3 class="task--title"></h3>
+                <h5 class="task--description"></h3>
+                <h5 class="task--due"></h3>
+                <h5 class="task--priority"></h3> -->
+            </div>
+        </main>
+
+        <footer>
+            <h4>Copyright_Hyunique</h4>
+        </footer>
+        <script src="index.js"></script>
+        <!-- <script src="main.js"></script> -->
     </body>
 
 </html>
