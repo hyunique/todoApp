@@ -1,0 +1,42 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;600&display=swap');
+/*font weight 300,600*/
+
+body{
+    font-family: 'Quicksand', sans-serif;
+}
+
+h1{
+    padding: 20px;
+    margin: 0;
+    font-weight: 600;
+    font-size: 48px;
+}
+
+form{
+    font-weight: 600;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    align-items: center;
+}
+
+
+input, select{
+    height: 30px;
+    width: 300px;
+    margin: 10px;
+}
+
+button{
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    width: 200px;
+    height: 40px;
+    margin: 20px;
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: black;
+    color: white;
+}
