@@ -14,16 +14,13 @@ const projects = []
 class Project{
     constructor(name, task, id= `P${(Date.now() + '').slice(-6)}`){
         this.name = name;
-        this.task = {task}
+        this.task = [task];
         this.id = id;
     }
 
-    // pushProject(obj) {
-    //     projects.push(obj)
-    // }
 }
 
-class Task extends Project{
+class Task{
     constructor(title, id = `T${(Date.now() + '').slice(-6)}`) {
         this.title = title;
         this.id = id;
@@ -32,20 +29,29 @@ class Task extends Project{
 
 (function app() {
     createNewProject('General')
+    displayProjectInput('General')
+    
+    createNewProject('Holiday')
+    displayProjectInput('Holiday')
 
+    const projectItems = document.querySelectorAll('.project--item')
+    projectItems.forEach(item=> item.addEventListener('click', () => {
+        console.log('clicked!')
+        item.classList.toggle('clicked')
+    }))
 
     projectInput.addEventListener('keydown', getProjectValue)
-    // projectInput.addEventListener('keydown', getValue)
     taskInput.addEventListener('keydown', getTaskValue)
-    
+  
 })()
 
 function createNewProject(pjtname) {
+    // create new project object and push it to array
     projects.push(new Project(pjtname))
 }
 
-// Get value from input value
 function getProjectValue(e) {
+    // Create new project and display with input value
     if (e.key === 'Enter') {
         displayProjectInput(this.value)
         createNewProject(this.value)
@@ -53,18 +59,26 @@ function getProjectValue(e) {
     }
 }
 
-// Take input value and render it on screen
 function displayProjectInput(value) {
+    // Take input value and render it on screen
     let html = `<li class="project--item">${value.slice(0,1).toUpperCase()+value.slice(1)}</li>`
-    projectList.insertAdjacentHTML('beforeend',html)
+    projectList.insertAdjacentHTML('beforeend', html)
+
 }
 
 function getTaskValue(e) {
     if (e.key === 'Enter') {
         displayTaskInput(this.value)
+        createNewTask(this.value)
         this.value =''
     }
 }
+
+function createNewTask(pjtname,taskname) {
+    const selectedProject = projects.find(pjt=>pjt.name===pjtname).task
+    selectedProject.push(new Task(taskname))
+}
+// console.log(projects.find(pjt=>pjt.name==='General').task=new Task('eat more'))
 
 function displayTaskInput(value) {
     let html = `
@@ -82,4 +96,6 @@ function displayTaskInput(value) {
 }
 
 
-//TODO implement function to connect task with a project
+
+
+//TODO find a way to select one project and attach task input to it
