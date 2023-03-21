@@ -2,7 +2,6 @@ const gridContainer = document.querySelector('.grid-container')
 const projectInput = document.querySelector('.project--input')
 const projectList = document.querySelector('.project--list');
 const projectItem = document.querySelector('.project--item')
-// const projectItems = document.querySelectorAll('.project--item')
 const taskOverview = document.querySelector('.overview--list')
 const taskInput = document.querySelector('.task--input')
 const taskList = document.querySelector('.task--list')
@@ -44,9 +43,11 @@ By using event delegation, you reduce the number of event listeners attached to 
         const activeItem = projectList.querySelector('.project--item.active');
         if (activeItem) {
           activeItem.classList.remove('active');
+          taskList.textContent=''
         }
         event.target.classList.add('active');
-      }
+        renderProjectTasks()
+        }
     });
 
     projectInput.addEventListener('keydown', getProjectValue)
@@ -62,13 +63,12 @@ function createNewProject(pjtname) {
 
 function displayProjectInput(value) {
     // Take input value and render it on screen
-    const li = document.createElement('li')
-    li.setAttribute('class', 'project--item')
-    li.innerHTML = value.slice(0, 1).toUpperCase() + value.slice(1) 
-    projectList.appendChild(li)
-    
-    // let html = `<li class="project--item">${value.slice(0,1).toUpperCase()+value.slice(1)}</li>`
-    // projectList.insertAdjacentHTML('beforeend', html)   
+    let html = `<li class="project--item">${value.slice(0,1).toUpperCase()+value.slice(1)}</li>`
+    projectList.insertAdjacentHTML('beforeend', html)   
+    // const li = document.createElement('li')
+    // li.setAttribute('class', 'project--item')
+    // li.innerHTML = value.slice(0, 1).toUpperCase() + value.slice(1) 
+    // projectList.appendChild(li)
 }
 
 function getProjectValue(e) {
@@ -85,12 +85,31 @@ function createNewTask(taskname) {
     projectItemAll.forEach(item => {
         if (item.classList.contains('active')) {
             const selectedProject = projects.find(pjt=>pjt.name===item.textContent).task
-            selectedProject.push(new Task(taskname))
+            selectedProject.push(new Task(`${taskname.slice(0, 1).toUpperCase() + taskname.slice(1)}`))
         }
     })
 }
-// console.log(projects.find(pjt=>pjt.name==='General').task=new Task('eat more'))
 
+function renderProjectTasks() {
+    projectItemAll.forEach(item => {
+        if (item.classList.contains('active')) {
+            const selectedProject = projects.find(pjt => pjt.name === item.textContent).task
+            selectedProject.forEach(task => {
+                let html = `
+                    <li class="task--item">
+                    <i class="material-symbols-outlined">drag_indicator</i>
+                    <input type="checkbox" class="checkbox">${task.title}
+                    <div class="icons">
+                    <i class="material-symbols-outlined">edit</i>
+                    <i class="material-symbols-outlined">delete</i>
+                    </div>
+                    </li>
+                `
+                taskList.insertAdjacentHTML('beforeend', html)
+            })
+        }
+    })
+}
 function displayTaskInput(value) {
     let html = `
     <li class="task--item">
@@ -109,6 +128,7 @@ function displayTaskInput(value) {
 function getTaskValue(e) {
     if (e.key === 'Enter') {
         createNewTask(this.value)
+        
         displayTaskInput(this.value)
         this.value =''
     }
