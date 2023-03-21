@@ -1,8 +1,9 @@
 const gridContainer = document.querySelector('.grid-container')
 const projectInput = document.querySelector('.project--input')
-const projectList = document.querySelector('.project--list')
+const projectList = document.querySelector('.project--list');
 const projectItem = document.querySelector('.project--item')
-const taskOverview = document.querySelector('.overview')
+// const projectItems = document.querySelectorAll('.project--item')
+const taskOverview = document.querySelector('.overview--list')
 const taskInput = document.querySelector('.task--input')
 const taskList = document.querySelector('.task--list')
 const taskItem = document.querySelector('.task--item')
@@ -11,10 +12,12 @@ const icons = document.querySelector('.material-symbols-outlined')
 
 const projects = []
 
+
+
 class Project{
     constructor(name, task, id= `P${(Date.now() + '').slice(-6)}`){
         this.name = name;
-        this.task = [task];
+        this.task = [];
         this.id = id;
     }
 
@@ -29,16 +32,22 @@ class Task{
 
 (function app() {
     createNewProject('General')
-    displayProjectInput('General')
-    
+    projectList.firstElementChild.classList.add('active')
     createNewProject('Holiday')
-    displayProjectInput('Holiday')
+   
 
-    const projectItems = document.querySelectorAll('.project--item')
-    projectItems.forEach(item=> item.addEventListener('click', () => {
-        console.log('clicked!')
-        item.classList.toggle('clicked')
-    }))
+/* This code below adds a single click event listener to the project list element and uses event delegation to determine which project item was clicked. It then removes the active class from any previously active item and adds it to the clicked item.
+By using event delegation, you reduce the number of event listeners attached to the document and improve performance. */
+
+    projectList.addEventListener('click', (event) => {
+      if (event.target.matches('.project--item')) {
+        const activeItem = projectList.querySelector('.project--item.active');
+        if (activeItem) {
+          activeItem.classList.remove('active');
+        }
+        event.target.classList.add('active');
+      }
+    });
 
     projectInput.addEventListener('keydown', getProjectValue)
     taskInput.addEventListener('keydown', getTaskValue)
@@ -48,35 +57,37 @@ class Task{
 function createNewProject(pjtname) {
     // create new project object and push it to array
     projects.push(new Project(pjtname))
+    displayProjectInput(pjtname)
+}
+
+function displayProjectInput(value) {
+    // Take input value and render it on screen
+    const li = document.createElement('li')
+    li.setAttribute('class', 'project--item')
+    li.innerHTML = value.slice(0, 1).toUpperCase() + value.slice(1) 
+    projectList.appendChild(li)
+    
+    // let html = `<li class="project--item">${value.slice(0,1).toUpperCase()+value.slice(1)}</li>`
+    // projectList.insertAdjacentHTML('beforeend', html)   
 }
 
 function getProjectValue(e) {
     // Create new project and display with input value
     if (e.key === 'Enter') {
-        displayProjectInput(this.value)
         createNewProject(this.value)
         this.value =''
     }
 }
 
-function displayProjectInput(value) {
-    // Take input value and render it on screen
-    let html = `<li class="project--item">${value.slice(0,1).toUpperCase()+value.slice(1)}</li>`
-    projectList.insertAdjacentHTML('beforeend', html)
-
-}
-
-function getTaskValue(e) {
-    if (e.key === 'Enter') {
-        displayTaskInput(this.value)
-        createNewTask(this.value)
-        this.value =''
-    }
-}
-
-function createNewTask(pjtname,taskname) {
-    const selectedProject = projects.find(pjt=>pjt.name===pjtname).task
-    selectedProject.push(new Task(taskname))
+// When user push Enter key on task input, find clicked project and add task to that project
+const projectItemAll = document.querySelectorAll('.project--item')
+function createNewTask(taskname) {
+    projectItemAll.forEach(item => {
+        if (item.classList.contains('active')) {
+            const selectedProject = projects.find(pjt=>pjt.name===item.textContent).task
+            selectedProject.push(new Task(taskname))
+        }
+    })
 }
 // console.log(projects.find(pjt=>pjt.name==='General').task=new Task('eat more'))
 
@@ -95,7 +106,15 @@ function displayTaskInput(value) {
     taskList.insertAdjacentHTML('beforeend',html)
 }
 
+function getTaskValue(e) {
+    if (e.key === 'Enter') {
+        createNewTask(this.value)
+        displayTaskInput(this.value)
+        this.value =''
+    }
+}
 
 
 
-//TODO find a way to select one project and attach task input to it
+
+//TODO find a way to render task in the right project window

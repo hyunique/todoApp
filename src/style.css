@@ -89,9 +89,16 @@ nav{
 }
 
 
-.project--list .clicked{
-background-color: var(--sub-light);
-color: var(--main-white);
+/* .project--list .active{
+    border-radius: 20px;
+    background-color: var(--sub-light);
+    color: var(--main-white);
+} */
+
+.active{
+    border-radius: 20px;
+    background-color: var(--sub-light);
+    color: var(--main-white);
 }
 
 
@@ -119,21 +126,40 @@ input:focus::placeholder{
 }
 
 .project--item{
-    border-radius: 20px;
+    
     transition: color .2s;
 }
 
-.project--item:hover{
+/* .project--item:hover{
     color: var(--sub-light);
-}
+} */
+
+/* .project--item .clicked{
+    border-radius: 20px;
+    background-color: var(--sub-light);
+    color: var(--main-white);
+} */
 
 .task--box{
     grid-column: 2/ 5;
     grid-row: 2/ 3;
 }
 
+/* .task--container{
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-main);
+} */
+
+.task--project{
+    width:20%;
+}
+
+  
 .task--input{
-    width: 90%;
+    width: 75%;
 }
 
 .task--list{
