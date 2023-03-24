@@ -36,18 +36,20 @@ class Task{
     displayProjectInput('Holiday')
    
 
-/* This code below adds a single click event listener to the project list element and uses event delegation to determine which project item was clicked. It then removes the active class from any previously active item and adds it to the clicked item.
+/* This code below adds a single click event listener to the project list element 
+and uses event delegation to determine which project item was clicked. 
+It then removes the active class from any previously active item and adds it to the clicked item.
 By using event delegation, you reduce the number of event listeners attached to the document and improve performance. */
 
     projectList.addEventListener('click', (event) => {
-      if (event.target.matches('.project--item')) {
-        const activeItem = projectList.querySelector('.project--item.active');
-        if (activeItem) {
-          activeItem.classList.remove('active');
-          taskList.textContent=''
-        }
-        event.target.classList.add('active');
-        renderTasks()
+        if (event.target.matches('.project--item')) {
+            const activeItem = projectList.querySelector('.project--item.active');
+            if (activeItem) {
+              activeItem.classList.remove('active');
+              taskList.textContent=''
+            }
+            event.target.classList.add('active');
+              renderTasks()
         }
     });
 
@@ -118,15 +120,28 @@ function createNewTask(taskName) {
     // Add new task in the selected project
     findProject().data.push(new Task(`${makeUpperCase(taskName)}`))
     displayTaskInput(taskName);
+
 }
 
 function renderTasks() {
 
     findProject().data.forEach(task => {
         displayTaskInput(task.title)        
+        
     })
 }
 
+function renderBtn() {
+    
+    const deleteBtns = document.querySelectorAll('.btn-delete')
+    const editBtns = document.querySelectorAll('.btn-edit') 
+    deleteBtns.forEach(btn=>btn.addEventListener('click',handleBtnEvent))
+    editBtns.forEach(btn=>btn.addEventListener('click',handleBtnEvent))
+}
+
+function handleBtnEvent() {
+    console.log('clicked!')
+}
 
 function displayTaskInput(value) {
     let html = `
@@ -137,21 +152,16 @@ function displayTaskInput(value) {
     <div class="icons">
         <i class="material-symbols-outlined btn-edit">edit</i>
         <i class="material-symbols-outlined btn-delete">delete</i>
-    </div>
-    </li>
-    `
+        </div>
+        </li>
+        `
     taskList.insertAdjacentHTML('beforeend', html)
+    renderBtn()
 }
 
 
 
-//TODO add event listener for deleting/adding function
-const deleteBtn = document.querySelector('.btn-delete')
-const editBtn = document.querySelector('.btn-edit')
-    
-deleteBtn.addEventListener('click',handleBtnEvent)
-editBtn.addEventListener('click', handleBtnEvent)
+//TODO cross off todo list when checkbox is clicked
+//TODO handle error when nothing is typed in input
+//TODO add event listener for deleting/editiing function
 
-function handleBtnEvent() {
-    console.log('clicked!')
-}
