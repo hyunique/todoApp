@@ -145,6 +145,25 @@ function renderTasks() {
     })
 }
 
+function displayTaskInput(task) {
+    let html = `
+    <li class="task--item" id="${task.id}">
+    <i class="material-symbols-outlined">drag_indicator</i>
+    <input type="checkbox" class="checkbox">
+    <h3 class="task--title">${makeUpperCase(task.title)}</h3>
+    <div class="icons">
+        <i class="material-symbols-outlined btn-edit">edit</i>
+        <i class="material-symbols-outlined btn-delete">delete</i>
+        </div>
+        </li>
+        `
+    taskList.insertAdjacentHTML('beforeend', html)
+    renderBtn()
+
+
+}
+
+
 function renderBtn() {   
     const deleteBtns = document.querySelectorAll('.btn-delete')
     const editBtns = document.querySelectorAll('.btn-edit') 
@@ -152,11 +171,15 @@ function renderBtn() {
 
     deleteBtns.forEach(btn=>btn.addEventListener('click',deleteBtnEvent))
     editBtns.forEach(btn => btn.addEventListener('click', editBtnEvent))
+    taskTitles.forEach(btn=>btn.addEventListener('click', checkOffTask))
 
-    //TODO cross off todo list & checkbox
-    taskTitles.forEach(btn=>btn.addEventListener('click', (e) => {
-        e.target.style.textDecoration   = 'line-through'
-    }))
+}
+
+function checkOffTask() {
+    const checkbox = this.previousElementSibling
+    this.classList.toggle('task--checked')
+    checkbox.classList.toggle('task--checked')
+    checkbox.checked = checkbox.checked ? false : true;  
 }
 
 
@@ -175,21 +198,6 @@ function deleteBtnEvent() {
     findProject().data.pop(dataRemove)
 }
 
-function displayTaskInput(task) {
-    let html = `
-    <li class="task--item" id="${task.id}">
-    <i class="material-symbols-outlined">drag_indicator</i>
-    <input type="checkbox" class="checkbox">
-    <h3 class="task--title">${makeUpperCase(task.title)}</h3>
-    <div class="icons">
-        <i class="material-symbols-outlined btn-edit">edit</i>
-        <i class="material-symbols-outlined btn-delete">delete</i>
-        </div>
-        </li>
-        `
-    taskList.insertAdjacentHTML('beforeend', html)
-    renderBtn()
-}
 
 
 //TODO handle error when nothing is typed in input
