@@ -147,48 +147,57 @@ function renderTasks() {
 
 function displayTaskInput(task) {
     let html = `
-    <li class="task--item" id="${task.id}">
-    <i class="material-symbols-outlined">drag_indicator</i>
+    <li class="task--item" id="${task.id}" draggable="true">
     <input type="checkbox" class="checkbox">
+    <span class="checkmark"></span>
     <h3 class="task--title">${makeUpperCase(task.title)}</h3>
     <div class="icons">
-        <i class="material-symbols-outlined btn-edit">edit</i>
-        <i class="material-symbols-outlined btn-delete">delete</i>
-        </div>
-        </li>
-        `
+    <i class="material-symbols-outlined btn-delete">delete</i>
+    </div>
+    </li>
+    `
     taskList.insertAdjacentHTML('beforeend', html)
     renderBtn()
-
-
+    // <i class="material-symbols-outlined">drag_indicator</i>
+    // <i class="material-symbols-outlined btn-edit">edit</i>
 }
 
 
 function renderBtn() {   
     const deleteBtns = document.querySelectorAll('.btn-delete')
-    const editBtns = document.querySelectorAll('.btn-edit') 
     const taskTitles = document.querySelectorAll('.task--title')
-
-    deleteBtns.forEach(btn=>btn.addEventListener('click',deleteBtnEvent))
-    editBtns.forEach(btn => btn.addEventListener('click', editBtnEvent))
+    // const checkmarks = document.querySelectorAll('.checkmark')
+    deleteBtns.forEach(btn=>btn.addEventListener('click',deleteTask))
     taskTitles.forEach(btn=>btn.addEventListener('click', checkOffTask))
-
+    // checkmarks.forEach(btn=>btn.addEventListener('click', checkOffTask))
+    
 }
 
 function checkOffTask() {
-    const checkbox = this.previousElementSibling
+    const checkmark = this.previousElementSibling.previousElementSibling
     this.classList.toggle('task--checked')
-    checkbox.classList.toggle('task--checked')
-    checkbox.checked = checkbox.checked ? false : true;  
+    checkmark.checked = checkmark.checked ? false : 'checked'; 
 }
 
 
 //TODO add logic to event listener for editiing function
-function editBtnEvent() {
-    console.log('clicked!')
-}
+// function editTask(e) {
+//     const editModal = document.querySelector('.edit--modal')
+//     const editInput = document.querySelector('.edit--input')    
+//     const editSave = document.querySelector('.edit--save')    
+//     const editCancel = document.querySelector('.edit--cancel')    
+//     let value = this.parentElement.previousElementSibling.textContent
+    
+//     editModal.style.display = 'block'
+//     editInput.value = value
+//     editSave.addEventListener('click', () => {
+//         value = editInput.value;
+//         editModal.style.display = 'none'
+//     })
+//     editCancel.addEventListener('click', () => { editModal.style.display = 'none' })
+// }
 
-function deleteBtnEvent() {
+function deleteTask() {
     // Remove from DOM
     let taskDiv = this.parentNode.parentNode
     taskDiv.parentElement.removeChild(taskDiv)
@@ -200,6 +209,8 @@ function deleteBtnEvent() {
 
 
 
+//TODO refactor code into modules
+//TODO local storage api
 //TODO handle error when nothing is typed in input
 //TODO refer to Forkify architecture (MVC architecture)
 
