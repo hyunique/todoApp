@@ -157,7 +157,7 @@ li:hover{
 
 .task--item{
     display: grid;
-    grid-template-columns: 5% 5% 80% 10%;
+    grid-template-columns: 10% 80% 10%;
     align-items: center;
     grid-template-rows: auto;
     height: 100%;}
@@ -169,6 +169,66 @@ li:hover{
 .checkbox.task--checked{
     color: var(--main-theme);
 }
+
+
+
+
+/* Hide the browser's default checkbox */
+.task--item input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: none;
+    border: solid 1px var(--sub-light);
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .task--item:hover input ~ .checkmark {
+    background-color: var(--sub-light);
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .task--item input:checked ~ .checkmark {
+    background-color: var(--sub-dark);
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: relative;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .task--item input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .task--item .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+
+  
+
 
 .task--title{
     font-size: 18px;
@@ -195,6 +255,10 @@ li:hover{
 
 
 .edit--modal{
+    display: none;
+}
+
+.edit--modal.hidden{
     display: none;
 }
 
