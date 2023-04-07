@@ -165,18 +165,19 @@ function displayTaskInput(task) {
 
 function renderBtn() {   
     const deleteBtns = document.querySelectorAll('.btn-delete')
-    const taskTitles = document.querySelectorAll('.task--title')
-    // const checkmarks = document.querySelectorAll('.checkmark')
+    const taskItems = document.querySelectorAll('.task--item')
     deleteBtns.forEach(btn=>btn.addEventListener('click',deleteTask))
-    taskTitles.forEach(btn=>btn.addEventListener('click', checkOffTask))
-    // checkmarks.forEach(btn=>btn.addEventListener('click', checkOffTask))
-    
+    taskItems.forEach(btn=>btn.addEventListener('click', checkOffTask))
 }
 
-function checkOffTask() {
-    const checkmark = this.previousElementSibling.previousElementSibling
-    this.classList.toggle('task--checked')
-    checkmark.checked = checkmark.checked ? false : 'checked'; 
+//TODO add this function also for checkmark click
+function checkOffTask(e) {
+    if (e.target.matches('.task--title') || e.target.matches('.checkmark')) {
+        const checkbox = this.firstElementChild
+        const tasktitle = this.lastElementChild.previousElementSibling
+        tasktitle.classList.toggle('task--checked')
+        checkbox.checked = checkbox.checked ? false : 'checked'; 
+    }
 }
 
 
