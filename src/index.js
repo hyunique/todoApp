@@ -23,9 +23,10 @@ class Project{
 }
 
 class Task{
-    constructor(title, id = `T${(Date.now() + '').slice(-6)}`) {
+    constructor(title, id = `T${(Date.now() + '').slice(-6)}`, finished = false) {
         this.title = title;
         this.id = id;
+        this.finished = finished;
     }
 }
 
@@ -147,10 +148,10 @@ function renderTasks() {
 
 function displayTaskInput(task) {
     let html = `
-    <li class="task--item" id="${task.id}" draggable="true">
-    <input type="checkbox" class="checkbox">
+    <li class="task--item" id="${task.id}">
+    <input type="checkbox" class="checkbox" ${task.finished ? 'checked' : '!checked' }>
     <span class="checkmark"></span>
-    <h3 class="task--title">${makeUpperCase(task.title)}</h3>
+    <h3 class="task--title ${task.finished ? 'task--checked':''}">${makeUpperCase(task.title)}</h3>
     <div class="icons">
     <i class="material-symbols-outlined btn-delete">delete</i>
     </div>
@@ -170,33 +171,25 @@ function renderBtn() {
     taskItems.forEach(btn=>btn.addEventListener('click', checkOffTask))
 }
 
-//TODO add this function also for checkmark click
 function checkOffTask(e) {
     if (e.target.matches('.task--title') || e.target.matches('.checkmark')) {
         const checkbox = this.firstElementChild
         const tasktitle = this.lastElementChild.previousElementSibling
         tasktitle.classList.toggle('task--checked')
-        checkbox.checked = checkbox.checked ? false : 'checked'; 
+        checkbox.checked = checkbox.checked ? false : true; 
+        
+        finishTaskData(e)
     }
 }
 
+// loop over task array, check if finished ===true. if true -> add classList checked and checkbox checked
 
-//TODO add logic to event listener for editiing function
-// function editTask(e) {
-//     const editModal = document.querySelector('.edit--modal')
-//     const editInput = document.querySelector('.edit--input')    
-//     const editSave = document.querySelector('.edit--save')    
-//     const editCancel = document.querySelector('.edit--cancel')    
-//     let value = this.parentElement.previousElementSibling.textContent
-    
-//     editModal.style.display = 'block'
-//     editInput.value = value
-//     editSave.addEventListener('click', () => {
-//         value = editInput.value;
-//         editModal.style.display = 'none'
-//     })
-//     editCancel.addEventListener('click', () => { editModal.style.display = 'none' })
-// }
+// save finished status in task object
+function finishTaskData(e) {
+    let dataFinish = findProject().data.find(task => task.id === e.target.parentElement.id );
+    dataFinish.finished = dataFinish.finished ? false : true;
+}
+
 
 function deleteTask() {
     // Remove from DOM
