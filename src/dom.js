@@ -49,8 +49,6 @@ function displayTaskInput(task) {
     `
     taskList.insertAdjacentHTML('beforeend', html)
     renderBtn()
-    // <i class="material-symbols-outlined">drag_indicator</i>
-    // <i class="material-symbols-outlined btn-edit">edit</i>
 }
 
 

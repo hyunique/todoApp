@@ -38,8 +38,7 @@ By using event delegation, you reduce the number of event listeners attached to 
 
 
 
-//TODO refactor code into modules
 //TODO local storage api
 //TODO handle error when nothing is typed in input
-//TODO refer to Forkify architecture (MVC architecture)
+
 

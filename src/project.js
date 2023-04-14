@@ -1,4 +1,5 @@
 const projects = []
+
 class Project{
     constructor(name, task, active = false, id = `P${(Date.now() + '').slice(-6)}`){
         this.name = name;
@@ -6,7 +7,6 @@ class Project{
         this.active = active
         this.id = id;
     }
-
 }
 
 function inactivate() {
@@ -23,14 +23,12 @@ function activate() {
 
 function createNewProject(projectName) {
     // create new project object and push it to array
-    projects.push(new Project(makeUpperCase(projectName)))
-    
+    projects.push(new Project(makeUpperCase(projectName)))   
 }
 
 function makeUpperCase(input) {
     return input.slice(0,1).toUpperCase() + input.slice(1);
 }
-
 
 
 //-----Functions for creating & displaying new tasks -----//
