@@ -1,7 +1,7 @@
 import { projects, inactivate, activate, createNewProject } from "./project.js";
 import { renderTasks } from "./task.js";
 import { getProjectValue, displayProjectInput, getTaskValue } from "./dom.js";
-import styles from "./style.css";
+import "./style.css";
 
 (function app() {
   const projectList = document.querySelector(".project--list");
